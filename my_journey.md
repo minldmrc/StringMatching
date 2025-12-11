@@ -1,96 +1,107 @@
-# My Journey – String Matching Homework
+# My Journey – CENG303 String Matching Homework
 
 ## Introduction
 
-This homework focused on implementing and analyzing string matching algorithms and building a system that can intelligently choose the most suitable algorithm for a given scenario. At the beginning, I was familiar with the theoretical definitions of string matching algorithms, but I had limited experience implementing and comparing them in a structured and performance-oriented framework.
+This homework assignment focused on implementing and analyzing classical string matching algorithms, including Naive, KMP, Rabin-Karp, and Boyer-Moore, as well as designing a custom algorithm and a pre-analysis strategy to select the most suitable algorithm based on input characteristics.
 
-Through this assignment, I gained hands-on experience with algorithm design, performance analysis, and decision-making based on input characteristics.
-
-
-
-## Learning Process and Implementation
-
-### Boyer-Moore Algorithm
-
-The most challenging and educational part of this homework was implementing the Boyer-Moore algorithm. I started by revisiting the theoretical background, especially the **bad character rule** and how it allows the algorithm to skip unnecessary comparisons.
-
-I implemented the algorithm step by step, beginning with preprocessing the pattern to build the bad character table. During implementation, I paid special attention to edge cases such as:
-- Pattern longer than text
-- No match situations
-- Repeated characters in the pattern
-
-Testing the algorithm against the provided JSON test cases helped me verify correctness and understand how different inputs affect performance.
+The project was implemented in Java using a provided framework that included a common `Solution` base class, automated test runners, and a comprehensive set of test cases. Through this assignment, I explored how different algorithms behave under varying conditions such as short patterns, repetitive structures, long texts, and large alphabets.
 
 
 
-### GoCrazy Algorithm 
+## Boyer-Moore Implementation Experience
 
-For the optional GoCrazy algorithm, I experimented with combining simple heuristics inspired by existing algorithms. The goal was not to outperform well-established algorithms in every case, but to explore how heuristic-based optimizations can work for specific pattern characteristics.
+Implementing the Boyer-Moore algorithm was the most technically challenging part of this homework. While the bad character rule was relatively straightforward, the good suffix rule required much deeper understanding.
 
-This part helped me think more creatively about algorithm design rather than strictly following textbook approaches.
+I had to carefully study how suffix and prefix tables are constructed and how they interact during mismatch handling. Small mistakes in index calculations or shift logic easily caused incorrect matches or infinite loops. To overcome this, I tested the algorithm on very small strings, printed intermediate tables, and verified each rule separately before combining them.
+
+In the end, my implementation successfully passed all test cases and performed especially well on long-pattern scenarios, which confirmed that the algorithm was implemented correctly.
+
+
+
+## Designing the GoCrazy Algorithm
+
+The most enjoyable part of this homework was designing my own algorithm, called **GoCrazy**. Instead of inventing a completely new algorithm, I chose a hybrid approach that combines existing ideas in a simple and understandable way.
+
+My final design decision was intentionally minimal:
+
+- If the pattern length is **short (< 5)** → use **KMP**
+- Otherwise → use a **Sunday-style skipping algorithm**
+
+I initially considered more complex pattern analysis (such as dominant characters or repetition detection), but I realized that such logic could make the code harder to explain and maintain. Since this is an undergraduate algorithms course, I simplified GoCrazy to a clean and student-readable hybrid.
+
+Despite its simplicity, GoCrazy performed very well in practice. It was the fastest algorithm in several cases such as long texts, Unicode-heavy inputs, and large alphabets. This showed me that even simple heuristics can produce strong real-world performance.
 
 
 
 ## Pre-Analysis Strategy
 
-I implemented a pre-analysis system that decides which algorithm to use before execution. My strategy considers several factors:
+The purpose of the pre-analysis module was to select the fastest algorithm **before execution**, based on quick observations of the input.
 
-- Pattern length  
-- Text length  
-- Repeating prefixes in the pattern  
-- Expected overhead of the algorithm  
+My strategy was designed with two priorities:
+1. **Very low overhead**
+2. **Reasonable accuracy**
+
+The main factors I considered were:
+- Pattern length
+- Text length
+- Repetitive structure in the pattern
+- Estimated alphabet size
 
 For example:
-- Very short patterns are handled efficiently by the Naive algorithm.
-- Patterns with repeating prefixes favor KMP.
-- Longer patterns in large texts benefit from Boyer-Moore or Rabin-Karp.
+- Very short patterns → Naive
+- Repetitive patterns → KMP
+- Long text + long pattern → Boyer-Moore
+- Large alphabet scenarios → sometimes GoCrazy or Boyer-Moore
 
-This section helped me understand that algorithm efficiency is not only about asymptotic complexity, but also about practical input characteristics and overhead.
+Although the pre-analysis does not always choose the absolute fastest algorithm, its overhead is extremely small, and it demonstrates how heuristic-based decision making can be effective in algorithm selection.
 
 
 
 ## Research and External Resources
 
-During this homework, I used several external resources to guide my implementation and understanding:
+During this homework, I used several external resources for **conceptual understanding only**, including:
 
-- Online articles and visual explanations of the Boyer-Moore algorithm
-- Course lecture notes on string matching algorithms
-- Discussions and examples explaining trade-offs between Naive, KMP, Rabin-Karp, and Boyer-Moore
+- *CLRS – Introduction to Algorithms* (Boyer-Moore theory)
+- GeeksForGeeks articles on KMP, Rabin-Karp, and Boyer-Moore
+- University lecture notes and online tutorials
 
-I also used a Large Language Model (ChatGPT) to:
-- Clarify parts of the Boyer-Moore algorithm logic
-- Validate my understanding of preprocessing steps
-- Get feedback on how to structure the pre-analysis strategy
+I also used **ChatGPT** as a learning assistant to:
+- Clarify edge cases
+- Compare alternative implementations
+- Improve code readability
+- Brainstorm hybrid algorithm ideas
 
-The LLM was used as a learning aid and conceptual guide, not as a direct code generator.
-
-
-
-## Challenges Faced
-
-One of the main challenges was balancing correctness and efficiency. Some implementations initially worked for simple cases but failed on edge cases. Debugging these issues required careful tracing of indices and shifts.
-
-Another challenge was designing the pre-analysis logic in a way that improves performance without adding excessive overhead. This taught me that sometimes a simpler decision rule can be more effective than a complex one.
+All final code was written, tested, and debugged manually by me. The LLM was used responsibly as a support tool, not as an automatic code generator.
 
 
 
 ## What I Learned
 
-From this homework, I learned:
-- How advanced string matching algorithms work in practice
-- How preprocessing can drastically improve runtime performance
-- How to evaluate algorithms not only by theory but also by real test results
-- The importance of documenting research and development processes
+This assignment taught me several important lessons:
 
-Overall, this assignment strengthened both my algorithmic thinking and my practical software engineering skills.
+- Algorithm performance is highly input-dependent.
+- Preprocessing can be both a strength and a weakness.
+- Even simple heuristics can significantly improve performance.
+- Debugging algorithmic logic requires patience and systematic testing.
+- Hybrid approaches can outperform classical algorithms in real test cases.
+
+I also learned not to underestimate “simple” algorithms like Naive — in many short-pattern scenarios, it outperformed more advanced methods due to lower overhead.
 
 
 
-## Feedback
+## Honest Reflection
 
-This homework was challenging but very instructive. The provided test framework and comparison tables made it easier to understand algorithm behavior and performance differences. The requirement to document the learning journey encouraged honest reflection rather than focusing only on results.
+At the beginning, this homework felt overwhelming, especially the Boyer-Moore implementation. I struggled with understanding the good suffix rule and spent a lot of time fixing subtle bugs.
+
+However, once everything started working, the assignment became very satisfying. Seeing my implementations pass all tests and watching my custom algorithm win some cases was genuinely motivating.
+
+Although this homework took much more effort than I initially expected, it significantly improved my confidence in implementing complex algorithms and analyzing performance trade-offs.
+
+Overall, this was one of the most educational assignments I have completed so far.
 
 
 
 **Name:** Minel Demirci  
-**Student Number:** 23050121003
+**Student Number:** 23050121003  
+**Course:** CENG303 – Algorithms  
+**University:** Ankara Yıldırım Beyazıt University
