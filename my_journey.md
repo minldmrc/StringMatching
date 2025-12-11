@@ -13,8 +13,8 @@ their strengths, weaknesses, and performance differences in practice.
 ## Boyer–Moore Implementation Experience
 
 At the beginning, the Boyer–Moore algorithm was the most challenging part for me.
-Although I had seen the theory in lectures, implementing both the **bad character rule**
-and the **good suffix rule** in code required careful attention.
+Although I had seen the theory in lectures, implementing both the bad character rule
+and the good suffix rule in code required careful attention.
 
 I started by implementing the bad character rule first, because it is simpler and easier
 to test. After verifying that it worked correctly, I added the good suffix preprocessing
@@ -86,9 +86,7 @@ theoretical ideas into correct and efficient Java code. However, by testing step
 and simplifying my designs when necessary, I gained confidence in implementing complex
 algorithms.
 
-I learned that **clarity and correctness are more important than overcomplicated ideas**,
-especially in algorithm design. Overall, this assignment helped me understand string
-matching algorithms much better than just studying them theoretically.
+I also created a pdf file that expalined dataily of my work. 
 
 
 
