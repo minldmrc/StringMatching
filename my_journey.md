@@ -103,5 +103,3 @@ Overall, this was one of the most educational assignments I have completed so fa
 
 **Name:** Minel Demirci  
 **Student Number:** 23050121003  
-**Course:** CENG303 – Algorithms  
-**University:** Ankara Yıldırım Beyazıt University
